@@ -1,0 +1,20 @@
+const BASE_URL = 'http://discoverplaces-api.sarvendev.com/';
+const API_URL = 'front/api/';
+const MESSAGE_UPLOAD_URL = 'uploads/message/';
+
+function createApiUrl(endpoint) {
+  return BASE_URL + API_URL + endpoint;
+}
+
+export function getMessageUploadUrl(photo) {
+  return BASE_URL + MESSAGE_UPLOAD_URL + photo;
+}
+
+export function getMessages(lat, long) {
+  return fetch(createApiUrl(`message/list/${lat}/${long}`), {
+      method: 'GET',
+        headers: {
+          'Accept': 'application/json'
+        }
+    });
+}
