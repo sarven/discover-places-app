@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
 import { ScrollView, Text } from 'react-native';
 import { getMessages, getMessageUploadUrl } from './../../config/api';
-import { Card, ListItem } from 'react-native-elements';
+import { Card } from 'react-native-elements';
 
 
 export default class List extends Component {
-  state = {
-    messages: []
-  };
+  constructor () {
+    super();
+
+    this.state = {
+      messages: []
+    };
+  }
 
   getImage(message) {
     if (message.photo) {
-      return { uri: getMessageUploadUrl(message.photo) }
+      return { uri: getMessageUploadUrl(message.photo) };
     }
     if (message.video) {
-      return require('./../../img/video-placeholder.jpg')
+      return require('./../../img/video-placeholder.jpg');
     }
 
     return null;
@@ -28,7 +32,7 @@ export default class List extends Component {
 
         this.setState({
           messages: responseJson.data
-        })
+        });
       })
       .catch(e => {
         console.error(e);
@@ -39,7 +43,7 @@ export default class List extends Component {
     return (
       <ScrollView>
       {
-        this.state.messages.map((m, i) => {
+        this.state.messages.map(m => {
           const message = m[0];
 
           return (
@@ -49,7 +53,7 @@ export default class List extends Component {
                 {message.content}
               </Text>
             </Card>
-          )
+          );
         })
       }
       </ScrollView>

@@ -12,9 +12,9 @@ export function getMessageUploadUrl(photo) {
 
 export function getMessages(lat, long) {
   return fetch(createApiUrl(`message/list/${lat}/${long}`), {
-      method: 'GET',
-        headers: {
-          'Accept': 'application/json'
-        }
-    });
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json'
+    }
+  });
 }
