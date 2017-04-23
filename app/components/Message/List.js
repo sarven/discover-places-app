@@ -2,22 +2,28 @@ import React, { Component } from 'react';
 import { ScrollView, Text } from 'react-native';
 import { getMessages, getMessageUploadUrl } from './../../config/api';
 import { Card } from 'react-native-elements';
+import ReactMixin from 'react-mixin';
+import TimerMixin from 'react-timer-mixin';
 
+const REFRESH_TIME = 15000;
 
 export default class List extends Component {
   constructor () {
     super();
 
     this.state = {
-      messages: []
+      messages: [],
+      position: {
+        lat: 0,
+        long: 0
+      }
     };
   }
 
   getImage(message) {
     if (message.photo) {
       return { uri: getMessageUploadUrl(message.photo) };
-    }
-    if (message.video) {
+    } else if (message.video) {
       return require('./../../img/video-placeholder.jpg');
     }
 
@@ -25,11 +31,34 @@ export default class List extends Component {
   }
 
   componentDidMount () {
-    getMessages(50.0000002, 50.0000002)
+    this.getPosition();
+
+    this.setInterval(() => {
+      this.getPosition();
+    }, REFRESH_TIME);
+  }
+
+  getPosition () {
+    navigator.geolocation.getCurrentPosition(position => {
+      this.setState({
+        position: {
+          lat: position.coords.latitude,
+          long: position.coords.longitude
+        }
+      });
+      this.fetchMessages();
+    }, error => {
+      console.log(error.message);
+    }, {
+      enableHighAccuracy: true,
+      timeout: 20000
+    });
+  }
+
+  fetchMessages () {
+    getMessages(this.state.position.lat, this.state.position.long)
       .then(response => response.json())
       .then(responseJson => {
-        console.log(responseJson.data);
-
         this.setState({
           messages: responseJson.data
         });
@@ -60,3 +89,5 @@ export default class List extends Component {
     );
   }
 }
+
+ReactMixin.onClass(List, TimerMixin);
