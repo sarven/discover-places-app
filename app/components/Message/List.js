@@ -7,6 +7,7 @@ import TimerMixin from 'react-timer-mixin';
 import Date from './../Utils/Date';
 import Comment from './../Comment/Comment';
 import update from 'immutability-helper';
+import ImagePreviewModal from './../Utils/ImagePreviewModal';
 
 const REFRESH_TIME = 15000;
 
@@ -19,7 +20,9 @@ export default class List extends Component {
       position: {
         lat: 0,
         long: 0
-      }
+      },
+      imagePreview: null,
+      showImagePreviewModal: false
     };
   }
 
@@ -93,6 +96,20 @@ export default class List extends Component {
     });
   }
 
+  showImagePreviewModal (message) {
+    this.setState({
+      imagePreview: this.getImage(message),
+      showImagePreviewModal: true
+    });
+  }
+
+  hideImagePreviewModal () {
+    this.setState({
+      imagePreview: null,
+      showImagePreviewModal: false
+    });
+  }
+
   render () {
     return (
       <ScrollView>
@@ -104,6 +121,15 @@ export default class List extends Component {
               key={message.id}
               image={this.getImage(message)}
             >
+              {message.photo &&
+                <Button
+                  buttonStyle={{marginTop: 2, marginBottom: 2}}
+                  title="Pokaż zdjęcie"
+                  icon={{name: 'eye', type: 'font-awesome'}}
+                  backgroundColor="blue"
+                  onPress={() => this.showImagePreviewModal(message)}
+                />
+              }
               <Date date={message.date} />
               <Text style={{marginBottom: 10}}>
                 {message.content}
@@ -139,6 +165,11 @@ export default class List extends Component {
           );
         })
       }
+      <ImagePreviewModal
+        show={this.state.showImagePreviewModal}
+        image={this.state.imagePreview}
+        onHide={this.hideImagePreviewModal.bind(this)}
+      />
       </ScrollView>
     );
   }

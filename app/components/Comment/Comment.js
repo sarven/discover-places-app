@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
-import moment from 'moment';
 import { Card } from 'react-native-elements';
 import Date from './../Utils/Date';
 import { getCommentUploadUrl } from './../../config/api';
