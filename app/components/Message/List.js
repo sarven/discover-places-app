@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView, Text, View } from 'react-native';
-import { getMessages, getMessageUploadUrl } from './../../config/api';
+import { getMessages, getMessageUploadUrl, getCommentUploadUrl } from './../../config/api';
 import { Card, Button } from 'react-native-elements';
 import ReactMixin from 'react-mixin';
 import TimerMixin from 'react-timer-mixin';
@@ -86,22 +86,26 @@ export default class List extends Component {
     });
   }
 
-  getImage(message) {
-    if (message.photo) {
-      return { uri: getMessageUploadUrl(message.photo) };
-    } else if (message.video) {
+  getImage(item) {
+    if (item.photo) {
+      return { uri: this.getUploadUrl(item, 'photo') };
+    } else if (item.video) {
       return require('./../../img/video-placeholder.jpg');
     }
 
     return null;
   }
 
-  getVideo(message) {
-    if (message.video) {
-      return { uri: getMessageUploadUrl(message.video) };
+  getVideo(item) {
+    if (item.video) {
+      return { uri: this.getUploadUrl(item, 'video') };
     }
 
     return null;
+  }
+
+  getUploadUrl(item, resource) {
+    return item.scope ? getMessageUploadUrl(item[resource]) : getCommentUploadUrl(item[resource]);
   }
 
   toggleComments (message, show) {
@@ -118,9 +122,9 @@ export default class List extends Component {
     });
   }
 
-  showImagePreviewModal (message) {
+  showImagePreviewModal (item) {
     this.setState({
-      imagePreview: this.getImage(message),
+      imagePreview: this.getImage(item),
       showImagePreviewModal: true
     });
   }
@@ -132,9 +136,9 @@ export default class List extends Component {
     });
   }
 
-  showVideoPreviewModal (message) {
+  showVideoPreviewModal (item) {
     this.setState({
-      videoPreview: this.getVideo(message),
+      videoPreview: this.getVideo(item),
       showVideoPreviewModal: true
     });
   }
@@ -171,7 +175,7 @@ export default class List extends Component {
                   buttonStyle={{marginTop: 0, marginBottom: 3}}
                   title="Show video"
                   icon={{name: 'file-video-o', type: 'font-awesome'}}
-                  backgroundColor="blue"
+                  backgroundColor="brown"
                   onPress={() => this.showVideoPreviewModal(message)}
                 />
               }
@@ -196,6 +200,8 @@ export default class List extends Component {
                         <Comment
                           key={c.id}
                           comment={c}
+                          onPressImageButton={this.showImagePreviewModal.bind(this)}
+                          onPressVideoButton={this.showVideoPreviewModal.bind(this)}
                         />
                       );
                     })
