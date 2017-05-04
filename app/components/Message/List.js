@@ -66,13 +66,24 @@ export default class List extends Component {
           return message;
         });
 
-        this.setState({
-          messages: messages
-        });
+        this.updateMessages(messages);
       })
       .catch(e => {
         console.error(e);
       });
+  }
+
+  updateMessages (messages) {
+    messages.forEach(message => {
+      const existingMessage = this.state.messages.find(item => item.id === message.id);
+      if (existingMessage) {
+        message.showComments = existingMessage.showComments;
+      }
+    });
+
+    this.setState({
+      messages: messages
+    });
   }
 
   getImage(message) {
@@ -182,7 +193,10 @@ export default class List extends Component {
                   {
                     message.comments.map(c => {
                       return (
-                        <Comment key={c.id} comment={c} />
+                        <Comment
+                          key={c.id}
+                          comment={c}
+                        />
                       );
                     })
                   }
