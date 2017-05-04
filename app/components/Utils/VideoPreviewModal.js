@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { Modal, View } from 'react-native';
 import { Button } from 'react-native-elements';
-import FitImage from 'react-native-fit-image';
+import VideoPlayer from 'react-native-video-player';
 
-export default class ImagePreviewModal extends Component
-{
+export default class VideoPreviewModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
       show: props.show,
-      image: props.image,
+      video: props.video,
       onHide: props.onHide
     };
   }
@@ -17,7 +16,7 @@ export default class ImagePreviewModal extends Component
   componentWillReceiveProps(nextProps) {
     this.setState({
       show: nextProps.show,
-      image: nextProps.image,
+      video: nextProps.video,
       onHide: nextProps.onHide
     });
   }
@@ -29,7 +28,7 @@ export default class ImagePreviewModal extends Component
         transparent={false}
         visible={this.props.show}
         onRequestClose={() => {
-          console.log('Image Modal has been closed.');
+          console.log('Modal has been closed.');
         }}
       >
        <View style={{margin:0}}>
@@ -45,10 +44,10 @@ export default class ImagePreviewModal extends Component
            backgroundColor="red"
            onPress={() => this.state.onHide()}
          />
-         <FitImage
-           resizeMode="contain"
-           source={this.state.image}
-         />
+        <VideoPlayer
+          video={this.state.video}
+          resizeMode="cover"
+        />
        </View>
       </Modal>
     );

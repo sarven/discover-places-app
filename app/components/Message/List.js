@@ -8,6 +8,7 @@ import Date from './../Utils/Date';
 import Comment from './../Comment/Comment';
 import update from 'immutability-helper';
 import ImagePreviewModal from './../Utils/ImagePreviewModal';
+import VideoPreviewModal from './../Utils/VideoPreviewModal';
 
 const REFRESH_TIME = 15000;
 
@@ -22,7 +23,9 @@ export default class List extends Component {
         long: 0
       },
       imagePreview: null,
-      showImagePreviewModal: false
+      showImagePreviewModal: false,
+      videoPreview: null,
+      showVideoPreviewModal: false
     };
   }
 
@@ -82,6 +85,14 @@ export default class List extends Component {
     return null;
   }
 
+  getVideo(message) {
+    if (message.video) {
+      return { uri: getMessageUploadUrl(message.video) };
+    }
+
+    return null;
+  }
+
   toggleComments (message, show) {
     const index = this.state.messages.findIndex(item => item.id === message.id);
     const messages = update(this.state.messages, {
@@ -110,6 +121,20 @@ export default class List extends Component {
     });
   }
 
+  showVideoPreviewModal (message) {
+    this.setState({
+      videoPreview: this.getVideo(message),
+      showVideoPreviewModal: true
+    });
+  }
+
+  hideVideoPreviewModal () {
+    this.setState({
+      videoPreview: null,
+      showVideoPreviewModal: false
+    });
+  }
+
   render () {
     return (
       <ScrollView>
@@ -123,11 +148,20 @@ export default class List extends Component {
             >
               {message.photo &&
                 <Button
-                  buttonStyle={{marginTop: 2, marginBottom: 2}}
-                  title="Pokaż zdjęcie"
-                  icon={{name: 'eye', type: 'font-awesome'}}
+                  buttonStyle={{marginTop: 0, marginBottom: 3}}
+                  title="Show photo"
+                  icon={{name: 'file-image-o', type: 'font-awesome'}}
                   backgroundColor="blue"
                   onPress={() => this.showImagePreviewModal(message)}
+                />
+              }
+              {message.video &&
+                <Button
+                  buttonStyle={{marginTop: 0, marginBottom: 3}}
+                  title="Show video"
+                  icon={{name: 'file-video-o', type: 'font-awesome'}}
+                  backgroundColor="blue"
+                  onPress={() => this.showVideoPreviewModal(message)}
                 />
               }
               <Date date={message.date} />
@@ -137,7 +171,7 @@ export default class List extends Component {
               {!message.showComments && message.comments.length > 0 &&
                 <Button
                   buttonStyle={{marginTop: 10}}
-                  title="Pokaż komentarze"
+                  title="Show comments"
                   icon={{name: 'comments-o', type: 'font-awesome'}}
                   backgroundColor="green"
                   onPress={() => this.toggleComments(message, true)}
@@ -154,7 +188,7 @@ export default class List extends Component {
                   }
                   <Button
                     buttonStyle={{marginTop: 10}}
-                    title="Ukryj komentarze"
+                    title="Hide comments"
                     icon={{name: 'eye-slash', type: 'font-awesome'}}
                     backgroundColor="red"
                     onPress={() => this.toggleComments(message, false)}
@@ -169,6 +203,11 @@ export default class List extends Component {
         show={this.state.showImagePreviewModal}
         image={this.state.imagePreview}
         onHide={this.hideImagePreviewModal.bind(this)}
+      />
+      <VideoPreviewModal
+        show={this.state.showVideoPreviewModal}
+        video={this.state.videoPreview}
+        onHide={this.hideVideoPreviewModal.bind(this)}
       />
       </ScrollView>
     );
