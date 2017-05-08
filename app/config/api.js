@@ -23,3 +23,14 @@ export function getMessages(lat, long) {
     }
   });
 }
+
+export function createMessage(message) {
+  return fetch(createApiUrl('message'), {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({message: message})
+  });
+}

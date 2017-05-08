@@ -151,84 +151,94 @@ export default class List extends Component {
   }
 
   render () {
+    const { navigate } = this.props.navigation;
+
     return (
       <ScrollView>
-      {
-        this.state.messages.map(message => {
+        <Button
+          buttonStyle={{marginTop: 20, marginBottom: 5}}
+          title="Add message"
+          icon={{name: 'plus', type: 'font-awesome'}}
+          backgroundColor="red"
+          large={true}
+          onPress={() => navigate('MessageCreator')}
+        />
+        {
+          this.state.messages.map(message => {
 
-          return (
-            <Card
-              key={message.id}
-              image={this.getImage(message)}
-            >
-              {message.photo &&
-                <Button
-                  buttonStyle={{marginTop: 0, marginBottom: 3}}
-                  title="Show photo"
-                  icon={{name: 'file-image-o', type: 'font-awesome'}}
-                  backgroundColor="blue"
-                  onPress={() => this.showImagePreviewModal(message)}
-                />
-              }
-              {message.video &&
-                <Button
-                  buttonStyle={{marginTop: 0, marginBottom: 3}}
-                  title="Show video"
-                  icon={{name: 'file-video-o', type: 'font-awesome'}}
-                  backgroundColor="brown"
-                  onPress={() => this.showVideoPreviewModal(message)}
-                />
-              }
-              <Date date={message.date} />
-              <Text style={{marginBottom: 10}}>
-                {message.content}
-              </Text>
-              {!message.showComments && message.comments.length > 0 &&
-                <Button
-                  buttonStyle={{marginTop: 10}}
-                  title="Show comments"
-                  icon={{name: 'comments-o', type: 'font-awesome'}}
-                  backgroundColor="green"
-                  onPress={() => this.toggleComments(message, true)}
-                />
-              }
-              {message.showComments &&
-                <View>
-                  {
-                    message.comments.map(c => {
-                      return (
-                        <Comment
-                          key={c.id}
-                          comment={c}
-                          onPressImageButton={this.showImagePreviewModal.bind(this)}
-                          onPressVideoButton={this.showVideoPreviewModal.bind(this)}
-                        />
-                      );
-                    })
-                  }
+            return (
+              <Card
+                key={message.id}
+                image={this.getImage(message)}
+              >
+                {message.photo &&
+                  <Button
+                    buttonStyle={{marginTop: 0, marginBottom: 3}}
+                    title="Show photo"
+                    icon={{name: 'file-image-o', type: 'font-awesome'}}
+                    backgroundColor="blue"
+                    onPress={() => this.showImagePreviewModal(message)}
+                  />
+                }
+                {message.video &&
+                  <Button
+                    buttonStyle={{marginTop: 0, marginBottom: 3}}
+                    title="Show video"
+                    icon={{name: 'file-video-o', type: 'font-awesome'}}
+                    backgroundColor="brown"
+                    onPress={() => this.showVideoPreviewModal(message)}
+                  />
+                }
+                <Date date={message.date} />
+                <Text style={{marginBottom: 10}}>
+                  {message.content}
+                </Text>
+                {!message.showComments && message.comments.length > 0 &&
                   <Button
                     buttonStyle={{marginTop: 10}}
-                    title="Hide comments"
-                    icon={{name: 'eye-slash', type: 'font-awesome'}}
-                    backgroundColor="red"
-                    onPress={() => this.toggleComments(message, false)}
+                    title="Show comments"
+                    icon={{name: 'comments-o', type: 'font-awesome'}}
+                    backgroundColor="green"
+                    onPress={() => this.toggleComments(message, true)}
                   />
-                </View>
-              }
-            </Card>
-          );
-        })
-      }
-      <ImagePreviewModal
-        show={this.state.showImagePreviewModal}
-        image={this.state.imagePreview}
-        onHide={this.hideImagePreviewModal.bind(this)}
-      />
-      <VideoPreviewModal
-        show={this.state.showVideoPreviewModal}
-        video={this.state.videoPreview}
-        onHide={this.hideVideoPreviewModal.bind(this)}
-      />
+                }
+                {message.showComments &&
+                  <View>
+                    {
+                      message.comments.map(c => {
+                        return (
+                          <Comment
+                            key={c.id}
+                            comment={c}
+                            onPressImageButton={this.showImagePreviewModal.bind(this)}
+                            onPressVideoButton={this.showVideoPreviewModal.bind(this)}
+                          />
+                        );
+                      })
+                    }
+                    <Button
+                      buttonStyle={{marginTop: 10}}
+                      title="Hide comments"
+                      icon={{name: 'eye-slash', type: 'font-awesome'}}
+                      backgroundColor="red"
+                      onPress={() => this.toggleComments(message, false)}
+                    />
+                  </View>
+                }
+              </Card>
+            );
+          })
+        }
+        <ImagePreviewModal
+          show={this.state.showImagePreviewModal}
+          image={this.state.imagePreview}
+          onHide={this.hideImagePreviewModal.bind(this)}
+        />
+        <VideoPreviewModal
+          show={this.state.showVideoPreviewModal}
+          video={this.state.videoPreview}
+          onHide={this.hideVideoPreviewModal.bind(this)}
+        />
       </ScrollView>
     );
   }
