@@ -39,6 +39,8 @@
         "no-console": 0
     },
     "globals": {
-      "fetch": false
+      "fetch": false,
+      "FormData": false,
+      "navigator": false
     }
 }
