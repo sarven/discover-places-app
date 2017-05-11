@@ -3,6 +3,8 @@ import { View, Picker, Text } from 'react-native';
 import { FormLabel, FormInput, Button } from 'react-native-elements';
 import { createMessage } from './../../config/api';
 import update from 'immutability-helper';
+import PhotoPicker from './../Utils/PhotoPicker';
+import VideoPicker from './../Utils/VideoPicker';
 
 const AVAILABLE_SCOPES  = [1,2,5];
 const HTTP_CREATED = 201;
@@ -32,6 +34,17 @@ export default class Creator extends Component
 
     const message = update(this.state.message, {[property]: {
       $set: value
+    }});
+
+    this.setState({
+      message: message
+    });
+    this.validate();
+  }
+
+  handlePick (target, source) {
+    const message = update(this.state.message, {[target]: {
+      $set: source
     }});
 
     this.setState({
@@ -95,9 +108,15 @@ export default class Creator extends Component
           onChangeText={(content) => this.updateField('content', content)}
           value={this.state.message.content}
         />
+        <PhotoPicker
+          onPick={this.handlePick.bind(this)}
+        />
+        <VideoPicker
+          onPick={this.handlePick.bind(this)}
+        />
         <Picker
-          selectedValue={this.state.message.scope}
-          onValueChange={(scope) => this.updateField('scope', scope)}
+          selectedValue={this.state.message.scope.toString()}
+          onValueChange={(scope) => this.updateField('scope', parseInt(scope))}
         >
           <Picker.Item label="1km" value="1" />
           <Picker.Item label="2km" value="2" />
