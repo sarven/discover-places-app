@@ -9,6 +9,7 @@ import Comment from './../Comment/Comment';
 import update from 'immutability-helper';
 import ImagePreviewModal from './../Utils/ImagePreviewModal';
 import VideoPreviewModal from './../Utils/VideoPreviewModal';
+import CommentCreator from './../Comment/Creator';
 
 const REFRESH_TIME = 15000;
 
@@ -193,10 +194,10 @@ export default class List extends Component {
                 <Text style={{marginBottom: 10}}>
                   {message.content}
                 </Text>
-                {!message.showComments && message.comments.length > 0 &&
+                {!message.showComments &&
                   <Button
                     buttonStyle={{marginTop: 10}}
-                    title="Show comments"
+                    title={message.comments.length > 0 ? 'Show comments' : 'Add comment'}
                     icon={{name: 'comments-o', type: 'font-awesome'}}
                     backgroundColor="green"
                     onPress={() => this.toggleComments(message, true)}
@@ -216,9 +217,12 @@ export default class List extends Component {
                         );
                       })
                     }
+                    <CommentCreator
+                      messageId={message.id}
+                    />
                     <Button
                       buttonStyle={{marginTop: 10}}
-                      title="Hide comments"
+                      title={message.comments.length > 0 ? 'Hide comments' : 'Hide comment form'}
                       icon={{name: 'eye-slash', type: 'font-awesome'}}
                       backgroundColor="red"
                       onPress={() => this.toggleComments(message, false)}

@@ -2,6 +2,7 @@ const BASE_URL = 'http://discoverplaces-api.sarvendev.com/';
 const API_URL = 'front/api/';
 const MESSAGE_UPLOAD_URL = 'uploads/message/';
 const COMMENT_UPLOAD_URL = 'uploads/comment/';
+export const HTTP_CREATED = 201;
 
 function createApiUrl (endpoint) {
   return BASE_URL + API_URL + endpoint;

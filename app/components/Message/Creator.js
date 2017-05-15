@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { View, Picker, Text } from 'react-native';
 import { FormLabel, FormInput, Button } from 'react-native-elements';
-import { createMessage } from './../../config/api';
+import { createMessage, HTTP_CREATED } from './../../config/api';
 import update from 'immutability-helper';
 import PhotoPicker from './../Utils/PhotoPicker';
 import VideoPicker from './../Utils/VideoPicker';
 
 const AVAILABLE_SCOPES  = [1,2,5];
-const HTTP_CREATED = 201;
 
 export default class Creator extends Component
 {
