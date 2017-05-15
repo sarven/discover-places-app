@@ -35,6 +35,16 @@ export function createMessage (message) {
   });
 }
 
+export function createComment (messageId, comment) {
+  return fetch(createApiUrl(`message/${messageId}/comment`), {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json'
+    },
+    body: createFormData('comment', comment)
+  });
+}
+
 function createFormData (object, data) {
   let formData = new FormData();
 
