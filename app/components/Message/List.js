@@ -151,6 +151,10 @@ export default class List extends Component {
     });
   }
 
+  onCreateComment() {
+    this.getPosition();
+  }
+
   render () {
     const { navigate } = this.props.navigation;
 
@@ -219,6 +223,7 @@ export default class List extends Component {
                     }
                     <CommentCreator
                       messageId={message.id}
+                      onCreate={this.onCreateComment.bind(this)}
                     />
                     <Button
                       buttonStyle={{marginTop: 10}}

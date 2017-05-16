@@ -68,7 +68,7 @@ export default class Creator extends Component
     createComment(this.state.messageId, this.state.comment)
       .then(response =>  {
         if (response.status === HTTP_CREATED) {
-          this.props.navigation.navigate('MessageList');
+          this.props.onCreate();
         }
       });
   }

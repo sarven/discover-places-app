@@ -6,9 +6,6 @@ export default class PhotoPicker extends Component
 {
   constructor(props) {
     super(props);
-    this.state = {
-      onPick: props.onPick
-    };
   }
 
   selectPhoto() {
