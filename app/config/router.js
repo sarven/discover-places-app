@@ -1,6 +1,8 @@
+
 import { StackNavigator } from 'react-navigation';
 import MessageList from '../components/Message/List';
 import MessageCreator from '../components/Message/Creator';
+import { HEADER } from '../components/Utils/Header';
 
 export const Root = StackNavigator({
   MessageList: {
@@ -13,4 +15,7 @@ export const Root = StackNavigator({
   }
 }, {
   initialRouteName: 'MessageList',
+  navigationOptions: {
+    headerTitle: HEADER
+  }
 });
