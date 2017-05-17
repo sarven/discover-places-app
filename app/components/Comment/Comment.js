@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
-import { Card, Button } from 'react-native-elements';
+import { Card, Button, Grid, Col } from 'react-native-elements';
 import Date from './../Utils/Date';
 import { getCommentUploadUrl } from './../../config/api';
+import { COLORS, STYLES } from './../../config/style';
 
 export default class Comment extends Component
 {
@@ -31,26 +32,38 @@ export default class Comment extends Component
         key={this.state.comment.id}
         image={this.getImage(this.state.comment)}
       >
-        {this.state.comment.photo &&
-          <Button
-            buttonStyle={{marginTop: 0, marginBottom: 3}}
-            title="Show photo"
-            icon={{name: 'file-image-o', type: 'font-awesome'}}
-            backgroundColor="blue"
-            onPress={() => this.state.onPressImageButton(this.state.comment)}
-          />
-        }
-        {this.state.comment.video &&
-          <Button
-            buttonStyle={{marginTop: 0, marginBottom: 3}}
-            title="Show video"
-            icon={{name: 'file-video-o', type: 'font-awesome'}}
-            backgroundColor="brown"
-            onPress={() => this.state.onPressVideoButton(this.state.comment)}
-          />
-        }
-        <Date date={this.state.comment.date} />
-        <Text>{this.state.comment.content}</Text>
+        <Grid>
+          <Col>
+            <Date date={this.state.comment.date} />
+          </Col>
+          {this.state.comment.photo &&
+            <Col>
+              <Button
+                buttonStyle={STYLES.attachmentPreviewButton}
+                title="Show photo"
+                icon={{name: 'file-image-o', type: 'font-awesome'}}
+                backgroundColor={COLORS.yellow}
+                onPress={() => this.state.onPressImageButton(this.state.comment)}
+              />
+            </Col>
+          }
+          {this.state.comment.video &&
+            <Col>
+              <Button
+                buttonStyle={STYLES.attachmentPreviewButton}
+                title="Show video"
+                icon={{name: 'file-video-o', type: 'font-awesome'}}
+                backgroundColor={COLORS.orange}
+                onPress={() => this.state.onPressVideoButton(this.state.comment)}
+              />
+            </Col>
+          }
+        </Grid>
+        <Text
+          style={STYLES.commentContent}
+        >
+            {this.state.comment.content}
+        </Text>
       </Card>
     );
   }

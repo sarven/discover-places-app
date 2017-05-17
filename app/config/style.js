@@ -26,5 +26,22 @@ export const STYLES = StyleSheet.create({
   submit: {
     marginTop: 10,
     marginBottom: 10
+  },
+  createMessageButton: {
+    marginTop: 20,
+    marginBottom: 5
+  },
+  attachmentPreviewButton: {
+    padding: 5,
+    marginTop: -10,
+    marginRight: -10
+  },
+  messageContent: {
+    marginTop: 20,
+    marginBottom: 20
+  },
+  commentContent: {
+    marginTop: 10,
+    marginBottom: 10
   }
 });
