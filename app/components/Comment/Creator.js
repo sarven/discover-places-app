@@ -5,6 +5,7 @@ import update from 'immutability-helper';
 import { FormLabel, FormInput, Button } from 'react-native-elements';
 import PhotoPicker from './../Utils/PhotoPicker';
 import VideoPicker from './../Utils/VideoPicker';
+import { COLORS, STYLES } from './../../config/style';
 
 export default class Creator extends Component
 {
@@ -78,12 +79,7 @@ export default class Creator extends Component
       <View>
         {!this.state.valid &&
           <Text
-            style={{
-              color: 'red',
-              marginTop: 10,
-              marginBottom: 10,
-              textAlign: 'center'
-            }}
+            style={STYLES.error}
           >
               You have to add content, photo or video
             </Text>
@@ -100,10 +96,10 @@ export default class Creator extends Component
           onPick={this.handlePick.bind(this)}
         />
         <Button
-          buttonStyle={{marginTop: 10, marginBottom: 10}}
+          buttonStyle={STYLES.submit}
           title="Add comment"
           icon={{name: 'plus', type: 'font-awesome'}}
-          backgroundColor="green"
+          backgroundColor={COLORS.blue}
           onPress={this.submit.bind(this)}
         />
       </View>
