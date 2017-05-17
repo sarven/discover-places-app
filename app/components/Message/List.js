@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { getMessages, getMessageUploadUrl, getCommentUploadUrl } from './../../config/api';
-import { Card, Button } from 'react-native-elements';
+import { Card, Button, Grid, Col, Divider } from 'react-native-elements';
 import ReactMixin from 'react-mixin';
 import TimerMixin from 'react-timer-mixin';
 import Date from './../Utils/Date';
@@ -10,6 +10,7 @@ import update from 'immutability-helper';
 import ImagePreviewModal from './../Utils/ImagePreviewModal';
 import VideoPreviewModal from './../Utils/VideoPreviewModal';
 import CommentCreator from './../Comment/Creator';
+import { COLORS, STYLES } from './../../config/style';
 
 const REFRESH_TIME = 15000;
 
@@ -161,10 +162,10 @@ export default class List extends Component {
     return (
       <ScrollView>
         <Button
-          buttonStyle={{marginTop: 20, marginBottom: 5}}
+          buttonStyle={STYLES.createMessageButton}
           title="Add message"
           icon={{name: 'plus', type: 'font-awesome'}}
-          backgroundColor="red"
+          backgroundColor={COLORS.blue}
           large={true}
           onPress={() => navigate('MessageCreator')}
         />
@@ -176,34 +177,43 @@ export default class List extends Component {
                 key={message.id}
                 image={this.getImage(message)}
               >
-                {message.photo &&
-                  <Button
-                    buttonStyle={{marginTop: 0, marginBottom: 3}}
-                    title="Show photo"
-                    icon={{name: 'file-image-o', type: 'font-awesome'}}
-                    backgroundColor="blue"
-                    onPress={() => this.showImagePreviewModal(message)}
-                  />
-                }
-                {message.video &&
-                  <Button
-                    buttonStyle={{marginTop: 0, marginBottom: 3}}
-                    title="Show video"
-                    icon={{name: 'file-video-o', type: 'font-awesome'}}
-                    backgroundColor="brown"
-                    onPress={() => this.showVideoPreviewModal(message)}
-                  />
-                }
-                <Date date={message.date} />
-                <Text style={{marginBottom: 10}}>
+                <Grid>
+                  <Col>
+                    <Date date={message.date} />
+                  </Col>
+                  {message.photo &&
+                  <Col>
+                    <Button
+                      title="Photo"
+                      icon={{name: 'file-image-o', type: 'font-awesome'}}
+                      onPress={() => this.showImagePreviewModal(message)}
+                      buttonStyle={STYLES.attachmentPreviewButton}
+                      backgroundColor={COLORS.yellow}
+                    />
+                  </Col>
+                  }
+                  {message.video &&
+                    <Col>
+                      <Button
+                        title="Video"
+                        icon={{name: 'file-video-o', type: 'font-awesome'}}
+                        onPress={() => this.showVideoPreviewModal(message)}
+                        buttonStyle={STYLES.attachmentPreviewButton}
+                        backgroundColor={COLORS.orange}
+                      />
+                    </Col>
+                  }
+                </Grid>
+                <Divider/>
+                <Text style={STYLES.messageContent}>
                   {message.content}
                 </Text>
                 {!message.showComments &&
                   <Button
-                    buttonStyle={{marginTop: 10}}
+                    buttonStyle={STYLES.toggleCommentsButton}
                     title={message.comments.length > 0 ? 'Show comments' : 'Add comment'}
                     icon={{name: 'comments-o', type: 'font-awesome'}}
-                    backgroundColor="green"
+                    backgroundColor={COLORS.blue}
                     onPress={() => this.toggleComments(message, true)}
                   />
                 }
@@ -226,10 +236,10 @@ export default class List extends Component {
                       onCreate={this.onCreateComment.bind(this)}
                     />
                     <Button
-                      buttonStyle={{marginTop: 10}}
+                      buttonStyle={STYLES.toggleCommentsButton}
                       title={message.comments.length > 0 ? 'Hide comments' : 'Hide comment form'}
                       icon={{name: 'eye-slash', type: 'font-awesome'}}
-                      backgroundColor="red"
+                      backgroundColor={COLORS.pink}
                       onPress={() => this.toggleComments(message, false)}
                     />
                   </View>

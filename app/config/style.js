@@ -43,5 +43,8 @@ export const STYLES = StyleSheet.create({
   commentContent: {
     marginTop: 10,
     marginBottom: 10
+  },
+  toggleCommentsButton: {
+    marginTop: 10
   }
 });
