@@ -46,5 +46,14 @@ export const STYLES = StyleSheet.create({
   },
   toggleCommentsButton: {
     marginTop: 10
+  },
+  modalView: {
+    margin: 0
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    zIndex: 9999
   }
 });

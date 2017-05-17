@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Modal, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import FitImage from 'react-native-fit-image';
+import { COLORS, STYLES } from './../../config/style';
 
 export default class ImagePreviewModal extends Component
 {
@@ -32,17 +33,12 @@ export default class ImagePreviewModal extends Component
           console.log('Image Modal has been closed.');
         }}
       >
-       <View style={{margin:0}}>
+       <View style={STYLES.modalView}>
          <Button
-           buttonStyle={{
-             position: 'absolute',
-             top: 0,
-             right: 0,
-             zIndex: 9999
-           }}
+           buttonStyle={STYLES.closeButton}
            title="Close"
            icon={{name: 'window-close-o', type: 'font-awesome'}}
-           backgroundColor="red"
+           backgroundColor={COLORS.pink}
            onPress={() => this.state.onHide()}
          />
          <FitImage

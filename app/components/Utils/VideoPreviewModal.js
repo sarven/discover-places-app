@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Modal, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import VideoPlayer from 'react-native-video-player';
+import { COLORS, STYLES } from './../../config/style';
 
 export default class VideoPreviewModal extends Component {
   constructor(props) {
@@ -31,17 +32,12 @@ export default class VideoPreviewModal extends Component {
           console.log('Modal has been closed.');
         }}
       >
-       <View style={{margin:0}}>
+       <View style={STYLES.modalView}>
          <Button
-           buttonStyle={{
-             position: 'absolute',
-             top: 0,
-             right: 0,
-             zIndex: 9999
-           }}
+           buttonStyle={STYLES.closeButton}
            title="Close"
            icon={{name: 'window-close-o', type: 'font-awesome'}}
-           backgroundColor="red"
+           backgroundColor={COLORS.pink}
            onPress={() => this.state.onHide()}
          />
         <VideoPlayer
