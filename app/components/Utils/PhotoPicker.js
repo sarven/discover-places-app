@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'react-native-elements';
 import ImagePicker from 'react-native-image-picker';
+import { COLORS } from './../../config/style';
 
 export default class PhotoPicker extends Component
 {
@@ -46,7 +47,7 @@ export default class PhotoPicker extends Component
         buttonStyle={{marginTop: 10, marginBottom: 5}}
         title="Add photo"
         icon={{name: 'camera', type: 'font-awesome'}}
-        backgroundColor="blue"
+        backgroundColor={COLORS.yellow}
         onPress={() => this.selectPhoto()}
       />
     );
