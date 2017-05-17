@@ -5,6 +5,7 @@ import { createMessage, HTTP_CREATED } from './../../config/api';
 import update from 'immutability-helper';
 import PhotoPicker from './../Utils/PhotoPicker';
 import VideoPicker from './../Utils/VideoPicker';
+import { COLORS, STYLES } from './../../config/style';
 
 const AVAILABLE_SCOPES  = [1,2,5];
 
@@ -92,12 +93,7 @@ export default class Creator extends Component
       <View>
         {!this.state.valid &&
           <Text
-            style={{
-              color: 'red',
-              marginTop: 10,
-              marginBottom: 10,
-              textAlign: 'center'
-            }}
+            style={STYLES.error}
           >
               You have to add content, photo or video
             </Text>
@@ -116,16 +112,17 @@ export default class Creator extends Component
         <Picker
           selectedValue={this.state.message.scope.toString()}
           onValueChange={(scope) => this.updateField('scope', parseInt(scope))}
+          style={STYLES.picker}
         >
           <Picker.Item label="1km" value="1" />
           <Picker.Item label="2km" value="2" />
           <Picker.Item label="5km" value="5" />
         </Picker>
         <Button
-          buttonStyle={{marginTop: 10, marginBottom: 10}}
+          buttonStyle={STYLES.submit}
           title="Add"
           icon={{name: 'plus', type: 'font-awesome'}}
-          backgroundColor="green"
+          backgroundColor={COLORS.blue}
           large={true}
           onPress={this.submit.bind(this)}
         />
