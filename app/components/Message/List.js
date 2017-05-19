@@ -154,7 +154,12 @@ export default class List extends Component {
     });
   }
 
+  onCommentCreating () {
+    this.props.navigation.setParams({isCommentCreating: true});
+  }
+
   onCreateComment() {
+    this.props.navigation.setParams({isCommentCreating: false});
     this.getPosition();
   }
 
@@ -242,6 +247,7 @@ export default class List extends Component {
                     }
                     <CommentCreator
                       messageId={message.id}
+                      onCommentCreating={this.onCommentCreating.bind(this)}
                       onCreate={this.onCreateComment.bind(this)}
                     />
                     <Button

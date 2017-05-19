@@ -65,7 +65,7 @@ export default class Creator extends Component
     if (!this.state.valid) {
       return false;
     }
-
+    this.props.onCommentCreating();
     createComment(this.state.messageId, this.state.comment)
       .then(response =>  {
         if (response.status === HTTP_CREATED) {

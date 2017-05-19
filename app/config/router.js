@@ -20,7 +20,8 @@ export const Root = StackNavigator({
 }, {
   initialRouteName: 'MessageList',
   initialRouteParams: {
-    isLoading: false
+    isLoading: false,
+    isCommentCreating: false
   },
   navigationOptions: ({navigation}) => ({
     headerTitle: HEADER,
