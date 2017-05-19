@@ -65,7 +65,6 @@
       <string>Zocial.ttf</string>
     </array>
     <key>NSPhotoLibraryUsageDescription</key>
-    <key>NSCameraUsageDescription</key>
-    <key>NSMicrophoneUsageDescription</key>
+    <string>NSCameraUsageDescription</string>
   </dict>
 </plist>

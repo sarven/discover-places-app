@@ -55,5 +55,8 @@ export const STYLES = StyleSheet.create({
     top: 0,
     right: 0,
     zIndex: 9999
+  },
+  loader: {
+    marginRight: 10
   }
 });

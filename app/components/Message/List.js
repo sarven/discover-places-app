@@ -40,6 +40,7 @@ export default class List extends Component {
   }
 
   getPosition () {
+    this.props.navigation.setParams({isLoading: true});
     navigator.geolocation.getCurrentPosition(position => {
       this.setState({
         position: {
@@ -69,6 +70,7 @@ export default class List extends Component {
         });
 
         this.updateMessages(messages);
+        this.props.navigation.setParams({isLoading: false});
       })
       .catch(e => {
         console.error(e);
@@ -157,10 +159,17 @@ export default class List extends Component {
   }
 
   render () {
-    const { navigate } = this.props.navigation;
+    const { navigate, state } = this.props.navigation;
 
     return (
       <ScrollView>
+        {this.state.messages.length === 0 && !state.params.isLoading &&
+          <Text
+            style={STYLES.error}
+          >
+            In this place are no messages... Go to other place.
+          </Text>
+        }
         <Button
           buttonStyle={STYLES.createMessageButton}
           title="Add message"

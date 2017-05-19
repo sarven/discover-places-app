@@ -58,7 +58,7 @@ export default class Creator extends Component
     if (!this.state.valid) {
       return false;
     }
-
+    this.props.navigation.setParams({isLoading: true});
     navigator.geolocation.getCurrentPosition(position => {
       let message = this.state.message;
       message.latitude = position.coords.latitude;
@@ -67,7 +67,8 @@ export default class Creator extends Component
       createMessage(message)
         .then(response =>  {
           if (response.status === HTTP_CREATED) {
-            this.props.navigation.navigate('MessageList');
+            this.props.navigation.setParams({isLoading: false});
+            this.props.navigation.navigate('MessageList', {isLoading: false});
           }
         });
     });
