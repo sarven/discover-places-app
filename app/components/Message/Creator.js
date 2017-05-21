@@ -75,18 +75,12 @@ export default class Creator extends Component
   }
 
   validate () {
-    if (
-      (
-        (this.state.message.content && this.state.message.content !== '')
-        || this.state.message.photo
-        || this.state.message.video
-      )
-      && AVAILABLE_SCOPES.includes(this.state.message.scope)
-    ) {
-      this.setState({valid: true});
-    } else {
-      this.setState({valid: false});
-    }
+    const { content, photo, video } = this.state.message;
+    const dataExist = !!(content || photo || video);
+    const scopeValid = AVAILABLE_SCOPES.includes(this.state.message.scope);
+    const valid = dataExist && scopeValid;
+
+    this.setState({valid: valid});
   }
 
   render () {
@@ -96,8 +90,8 @@ export default class Creator extends Component
           <Text
             style={STYLES.error}
           >
-              You have to add content, photo or video
-            </Text>
+            You have to add content, photo or video
+          </Text>
         }
         <FormLabel>Content</FormLabel>
         <FormInput

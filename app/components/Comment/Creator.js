@@ -49,15 +49,10 @@ export default class Creator extends Component
   }
 
   validate () {
-    if (
-      (this.state.comment.content && this.state.comment.content !== '')
-      || this.state.comment.photo
-      || this.state.comment.video
-    ) {
-      this.setState({valid: true});
-    } else {
-      this.setState({valid: false});
-    }
+    const { content, photo, video } = this.state.comment;
+    const valid = !!(content || photo || video);
+
+    this.setState({valid: valid});
   }
 
   submit () {
@@ -81,8 +76,8 @@ export default class Creator extends Component
           <Text
             style={STYLES.error}
           >
-              You have to add content, photo or video
-            </Text>
+            You have to add content, photo or video
+          </Text>
         }
         <FormLabel>Content</FormLabel>
         <FormInput
