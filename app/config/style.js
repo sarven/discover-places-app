@@ -9,6 +9,16 @@ export const COLORS = {
 };
 
 export const STYLES = StyleSheet.create({
+  header: {
+    position: 'absolute',
+    left: 30,
+    right: 0,
+    flex: 1,
+    marginTop: 0,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    alignItems: 'center'
+  },
   error: {
     marginTop: 20,
     marginBottom: 10,
