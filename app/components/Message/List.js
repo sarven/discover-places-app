@@ -11,6 +11,7 @@ import ImagePreviewModal from './../Utils/ImagePreviewModal';
 import VideoPreviewModal from './../Utils/VideoPreviewModal';
 import CommentCreator from './../Comment/Creator';
 import { COLORS, STYLES } from './../../config/style';
+import LocationServicesDialogBox from 'react-native-android-location-services-dialog-box';
 
 const REFRESH_TIME = 15000;
 
@@ -27,12 +28,21 @@ export default class List extends Component {
       imagePreview: null,
       showImagePreviewModal: false,
       videoPreview: null,
-      showVideoPreviewModal: false
+      showVideoPreviewModal: false,
+      locationError: null
     };
   }
 
   componentDidMount () {
-    this.getPosition();
+    LocationServicesDialogBox.checkLocationServicesIsEnabled({
+      message: '<h2>Use Location ?</h2>This app wants to change your device settings:<br/><br/>Use GPS, Wi-Fi, and cell network for location<br/><br/>',
+      ok: 'YES',
+      cancel: 'NO'
+    }).then(() => {
+      this.getPosition();
+    }).catch((error) => {
+      this.setState({locationError: error.message});
+    });
 
     this.setInterval(() => {
       this.getPosition();
@@ -40,6 +50,7 @@ export default class List extends Component {
   }
 
   getPosition () {
+    this.setState({locationError: null});
     this.props.navigation.setParams({isLoading: true});
     navigator.geolocation.getCurrentPosition(position => {
       this.setState({
@@ -50,7 +61,7 @@ export default class List extends Component {
       });
       this.fetchMessages();
     }, error => {
-      console.log(error.message);
+      this.setState({locationError: error.message});
     }, {
       enableHighAccuracy: true,
       timeout: 20000
@@ -168,6 +179,13 @@ export default class List extends Component {
 
     return (
       <ScrollView>
+        {this.state.locationError &&
+          <Text
+            style={STYLES.error}
+          >
+            {this.state.locationError}
+          </Text>
+        }
         {this.state.messages.length === 0 && !state.params.isLoading &&
           <Text
             style={STYLES.error}
