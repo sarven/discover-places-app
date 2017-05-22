@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, View } from 'react-native';
+import { Modal, ScrollView } from 'react-native';
 import { Button } from 'react-native-elements';
 import FitImage from 'react-native-fit-image';
 import { COLORS, STYLES } from './../../config/style';
@@ -33,7 +33,7 @@ export default class ImagePreviewModal extends Component
           console.log('Image Modal has been closed.');
         }}
       >
-       <View style={STYLES.modalView}>
+       <ScrollView style={STYLES.modalView}>
          <FitImage
            resizeMode="contain"
            source={this.state.image}
@@ -45,7 +45,7 @@ export default class ImagePreviewModal extends Component
            backgroundColor={COLORS.pink}
            onPress={() => this.state.onHide()}
          />
-       </View>
+       </ScrollView>
       </Modal>
     );
   }
