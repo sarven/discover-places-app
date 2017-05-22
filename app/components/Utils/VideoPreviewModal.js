@@ -33,6 +33,10 @@ export default class VideoPreviewModal extends Component {
         }}
       >
        <View style={STYLES.modalView}>
+         <VideoPlayer
+           video={this.state.video}
+           resizeMode="cover"
+         />
          <Button
            buttonStyle={STYLES.closeButton}
            title="Close"
@@ -40,10 +44,6 @@ export default class VideoPreviewModal extends Component {
            backgroundColor={COLORS.pink}
            onPress={() => this.state.onHide()}
          />
-        <VideoPlayer
-          video={this.state.video}
-          resizeMode="cover"
-        />
        </View>
       </Modal>
     );

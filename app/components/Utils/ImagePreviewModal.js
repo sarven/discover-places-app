@@ -34,16 +34,16 @@ export default class ImagePreviewModal extends Component
         }}
       >
        <View style={STYLES.modalView}>
+         <FitImage
+           resizeMode="contain"
+           source={this.state.image}
+         />
          <Button
            buttonStyle={STYLES.closeButton}
            title="Close"
            icon={{name: 'window-close-o', type: 'font-awesome'}}
            backgroundColor={COLORS.pink}
            onPress={() => this.state.onHide()}
-         />
-         <FitImage
-           resizeMode="contain"
-           source={this.state.image}
          />
        </View>
       </Modal>
