@@ -59,6 +59,7 @@ export default class Creator extends Component
       return false;
     }
     this.props.navigation.setParams({isLoading: true});
+
     navigator.geolocation.getCurrentPosition(position => {
       let message = this.state.message;
       message.latitude = position.coords.latitude;
@@ -71,6 +72,11 @@ export default class Creator extends Component
             this.props.navigation.navigate('MessageList', {isLoading: false});
           }
         });
+    }, error => {
+      console.log(error.message);
+    }, {
+      enableHighAccuracy: true,
+      timeout: 20000
     });
   }
 
